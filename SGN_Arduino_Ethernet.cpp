@@ -1,4 +1,4 @@
-#include "sgnhi.h"
+#include "SGN_Arduino_Ethernet"
 
 dotori::dotori(char *sencode){
 	senCode = sencode;
