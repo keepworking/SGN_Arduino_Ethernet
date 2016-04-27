@@ -23,9 +23,9 @@
 
 #define MACHTYPE(v,t) (t == atInt?*(int*)v:(t == atFloat?*(float*)v:(t == atDouble?*(double*)v:(t == atLong?*(long*)v:0))))
 
-#define REST 1200000
+#define REST 1800000
 
-//#define DEBUG
+#define DEBUG
 
 #ifdef DEBUG
  #define DEBUG_PRINT(x) Serial.println(x)
@@ -70,7 +70,7 @@ public:
 	void init(char *id,char *devCode,IPAddress local_ip);
 private:
 
-	
+	//일괄 업로드 기능 필요.
 	byte mac[6] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 };

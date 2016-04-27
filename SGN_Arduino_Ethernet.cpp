@@ -30,6 +30,14 @@ int dotori::sendvalue(double val){
 int dotori::request(void *val,int type){
 	//delay(1000); 딜레이 필요없음 자꾸 밀려남.
 	unsigned long now = millis();
+
+	DEBUG_PRINT("last time.");
+	DEBUG_PRINT(sTime);
+	DEBUG_PRINT("now time.");
+	DEBUG_PRINT(now);
+	DEBUG_PRINT("value");
+	DEBUG_PRINT(MACHTYPE(val,type));
+
 	if(state != 0){
 		if(now <= sTime){
 			unsigned long lastTime = 0xffffffff - sTime;
@@ -44,6 +52,7 @@ int dotori::request(void *val,int type){
 
 	if (client.connect(SERVER, 80)) {
 		DEBUG_PRINT("connected");
+		client.flush();
 		client.print("GET /iot/iot_up.php?");
 		client.print("uid=");client.print("admin");
 		client.print("&dc=");client.print(dev.devCode);
