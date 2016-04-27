@@ -28,12 +28,12 @@ int dotori::sendvalue(double val){
 
 //데이터 타입과 함께 void 포인터 사용. 서버에 데이터 전송.
 int dotori::request(void *val,int type){
-	delay(1000);
+	//delay(1000); 딜레이 필요없음 자꾸 밀려남.
 	unsigned long now = millis();
 	if(state != 0){
 		if(now <= sTime){
 			unsigned long lastTime = 0xffffffff - sTime;
-			if(!(lastTime + now > REST)){
+			if((lastTime + now < REST)){
 				return WAIT;
 			}
 		}else if(now - sTime < REST){
