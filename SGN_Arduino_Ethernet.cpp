@@ -66,6 +66,10 @@ int dotori::request(void *val,int type){
 		client.stop();
 		state = 1;
 		sTime = now;
+
+		/*
+		* 클라이언트 상태 확인 필요. 상태에 따라 재실행을 하는등의 대처가 요함!!.
+		*/
 	}
 	else {
   		DEBUG_PRINT("connection failed");
