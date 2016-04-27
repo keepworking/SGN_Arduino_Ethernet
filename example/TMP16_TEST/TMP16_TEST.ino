@@ -1,4 +1,4 @@
-
+#include <SGN_Arduino_Ethernet.h>
 
 #define DEBUG
 
