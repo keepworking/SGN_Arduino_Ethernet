@@ -28,6 +28,7 @@ int dotori::sendvalue(double val){
 
 //데이터 타입과 함께 void 포인터 사용. 서버에 데이터 전송.
 int dotori::request(void *val,int type){
+	delay(1000);
 	unsigned long now = millis();
 	if(state != 0){
 		if(now <= sTime){
@@ -40,7 +41,7 @@ int dotori::request(void *val,int type){
 		}
 	}
 
-	
+
 	if (client.connect(SERVER, 80)) {
 		DEBUG_PRINT("connected");
 		client.print("GET /iot/iot_up.php?");
@@ -52,11 +53,6 @@ int dotori::request(void *val,int type){
 		client.print("Host:veyrobotics.cafe24.com \r\n");
 		client.print("User-Agent: sgnhiArduinoEthernet\r\n");
 		client.print("Connection: close\r\n");
-		/*client.print("Accept-Encoding: gzip\r\n");
-		client.print("Accept-Charset: ISO-8859-1,*;q=0.7\r\n");
-		client.print("Cache-Control: no-cache\r\n");
-		client.print("Accept-Language: de,en;q=0.7,en-us;q=0.3\r\n");
-		client.print("Referer: http://google.com/\r\n");*/
 		client.println();
 		client.stop();
 		state = 1;
