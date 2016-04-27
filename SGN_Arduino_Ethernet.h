@@ -16,8 +16,14 @@
 #define atDouble 3
 #define atLong 4
 
+// sendvalue 함수용 반환값 정의
+#define OK 0 // 서버에 데이터 전송.
+#define WAIT 1 // 서버에 전송한지 대기시간이 지나지 않음, 좀더 뒤에 전송 요망.
+#define ERROR 2 // 웹사이트에 접속 실패.
+
 #define MACHTYPE(v,t) (t == atInt?*(int*)v:(t == atFloat?*(float*)v:(t == atDouble?*(double*)v:(t == atLong?*(long*)v:0))))
 
+#define REST 1800000
 
 #ifdef DEBUG
  #define DEBUG_PRINT(x) Serial.println(x)
@@ -30,16 +36,21 @@ class dotori {
 public:
 	dotori(char *sencode);
 	void printcode();
-	void sendvalue(int val);
-	void sendvalue(float val);
-	void sendvalue(long val);
-	void sendvalue(double val);
+	int sendvalue(int val);
+	int sendvalue(float val);
+	int sendvalue(long val);
+	int sendvalue(double val);
 	//void sendvalue(void *val);
 private:
+	unsigned long sTime;
 	char* senCode;
-	void request(void *val,int type);
+	int request(void *val,int type);
 };
 
+
+
+
+//장치 메인 객체 사용자가 추가할 필요 x
 class sgnDev {
 public:
 	char* ID;
