@@ -9,25 +9,33 @@ void dotori::printcode(){
 }
 
 //입력 변수형별 전송 데이터 타입 정리.
-int dotori::sendvalue(int val){
-	return request(&val,atInt);
+void dotori::set(int val){
+	void * vo = &val;
+	value = *(uint32_t*)vo;
+	argType = atInt;
 }
 
-int dotori::sendvalue(float val){
-	return request(&val,atFloat);
+void dotori::set(float val){
+	void * vo = &val;
+	value = *(uint32_t*)vo;
+	argType = atFloat;
 }
 
-int dotori::sendvalue(long val){
-	return request(&val,atLong);
+void dotori::set(long val){
+	void * vo = &val;
+	value = *(uint32_t*)vo;
+	argType = atLong;
 }
 
-int dotori::sendvalue(double val){
-	return request(&val,atDouble);
+void dotori::set(double val){
+	void * vo = &val;
+	value = *(uint32_t*)vo;
+	argType = atDouble;
 }
 
 
 //데이터 타입과 함께 void 포인터 사용. 서버에 데이터 전송.
-int dotori::request(void *val,int type){
+/*int dotori::request(void *val,int type){
 	//delay(1000); 딜레이 필요없음 자꾸 밀려남.
 	unsigned long now = millis();
 
@@ -67,18 +75,15 @@ int dotori::request(void *val,int type){
 		state = 1;
 		sTime = now;
 
-		/*
-		* 클라이언트 상태 확인 필요. 상태에 따라 재실행을 하는등의 대처가 요함!!.
-		*/
 	}
 	else {
   		DEBUG_PRINT("connection failed");
   		return ERROR;
   	}
   	return OK;
-}
+}/*
 
-/*void dotori::sendvalue(void *val){
+/*vvoid dotori::setvalue(void *val){
 	Serial.println(*(float*) val);
 }*/
 
@@ -94,6 +99,69 @@ void sgnDev::init(char *id,char *devcode,IPAddress local_ip){
 	delay(1000);
 
 	DEBUG_PRINT("connecting....");
+}
+
+int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
+	
+	//return 1;
+	//send value code 아래쪽 부터.
+	unsigned long now = millis();
+
+	if(state != 0){
+		if(now <= sTime){
+			unsigned long lastTime = 0xffffffff - sTime;
+			if((lastTime + now < REST)){
+				return WAIT;
+			}
+		}else if(now - sTime < REST){
+			return WAIT;
+		}
+	}
+
+
+	if (client.connect(SERVER, 80)) {
+		DEBUG_PRINT("connected");
+		//client.flush();
+		client.print("GET /iot/iot_up.php?");
+		client.print("uid=");client.print(ID);
+		client.print("&dc=");client.print(devCode);
+		int cnt = 0;
+		va_list vl;
+		va_start(vl,mdotori);
+		for(dotori m = mdotori;m.chk == 42;m= va_arg(vl,dotori)){
+			uint32_t value = m.value;
+			void * vo = &m.value;
+			client.print("&sc");client.print(cnt);client.print("=");
+			client.print(m.senCode);
+			client.print("&sv");client.print(cnt);client.print("=");
+			client.print(MACHTYPE(vo,m.argType));
+			//
+			#ifdef DEBUG
+			Serial.print("&sc");Serial.print(cnt);Serial.print("=");
+			Serial.print(m.senCode);
+			Serial.print("&sv");Serial.print(cnt);Serial.print("=");
+			Serial.println(MACHTYPE(vo,m.argType));
+			#endif
+			//
+			cnt++;
+		}
+		va_end(vl);
+
+		client.print(" HTTP/1.0\r\n");
+		client.print("Host:veyrobotics.cafe24.com \r\n");
+		client.print("User-Agent: sgnhiArduinoEthernet\r\n");
+		client.print("Connection: close\r\n");
+		client.println();
+		//client.stop();
+		state = 1;
+		sTime = now;
+
+	}
+	else {
+  		DEBUG_PRINT("connection failed");
+  		return ERROR;
+  	}
+  	return OK;
 }
 
 sgnDev dev;
