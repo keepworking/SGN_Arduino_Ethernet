@@ -121,7 +121,7 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 
 	if (client.connect(SERVER, 80)) {
 		DEBUG_PRINT("connected");
-		//client.flush();
+		client.flush();
 		client.print("GET /iot/iot_up.php?");
 		client.print("uid=");client.print(ID);
 		client.print("&dc=");client.print(devCode);
@@ -152,7 +152,7 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 		client.print("User-Agent: sgnhiArduinoEthernet\r\n");
 		client.print("Connection: close\r\n");
 		client.println();
-		//client.stop();
+		client.stop();
 		state = 1;
 		sTime = now;
 
