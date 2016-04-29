@@ -76,6 +76,8 @@ private:
 	byte mac[6] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 	unsigned long sTime;
 	int state = 0;
+	IPAddress addr;
+	
 
 };
 
