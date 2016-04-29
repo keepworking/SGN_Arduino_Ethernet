@@ -77,6 +77,7 @@ private:
 	unsigned long sTime;
 	int state = 0;
 	IPAddress addr;
+	void init();
 	
 
 };

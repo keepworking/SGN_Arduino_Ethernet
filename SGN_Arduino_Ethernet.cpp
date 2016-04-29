@@ -89,10 +89,7 @@ void dotori::set(double val){
 
 void sgnDev::init(char *id,char *devcode,IPAddress local_ip){
 	addr = local_ip;
-	if(Ethernet.begin(mac) == 0){
-		DEBUG_PRINT("fail using dhcp");
-		Ethernet.begin(mac,addr);
-	}
+	init();
 	devCode = devcode;
 	ID = id;
 	DEBUG_PRINT(devCode);
@@ -100,6 +97,12 @@ void sgnDev::init(char *id,char *devcode,IPAddress local_ip){
 	delay(1000);
 
 	DEBUG_PRINT("connecting....");
+}
+void sgnDev::init(){
+	if(Ethernet.begin(mac) == 0){
+		DEBUG_PRINT("fail using dhcp");
+		Ethernet.begin(mac,addr);
+	}
 }
 
 int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
@@ -153,7 +156,7 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 		client.print("Connection: close\r\n");
 		client.println();
 		//Serial.println();
-		state = client.status() == 0?0:1;
+		state = client.status() == 0?0:1;q
 		//state = client.status() == 0?0:1;
 		//while(client.connected());
 		client.stop();
@@ -165,10 +168,7 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 		client.stop();
   		DEBUG_PRINT("connection failed");
   		DEBUG_PRINT("try to begin");
-  		if(Ethernet.begin(mac) == 0){
-			DEBUG_PRINT("fail using dhcp");
-			Ethernet.begin(mac,addr);
-		}
+  		init();
   		state = 0;
   		return ERROR;
   	}
