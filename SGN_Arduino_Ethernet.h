@@ -78,6 +78,10 @@ private:
 	unsigned long sTime;
 	int state = 0;
 	int restTime = REST;
+	IPAddress addr;
+	void init();
+	
+
 };
 
 extern sgnDev dev;

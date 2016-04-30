@@ -88,10 +88,8 @@ void dotori::set(double val){
 }*/
 
 void sgnDev::init(char *id,char *devcode,IPAddress local_ip){
-	if(Ethernet.begin(mac) == 0){
-		DEBUG_PRINT("fail using dhcp");
-		Ethernet.begin(mac,local_ip);
-	}
+	addr = local_ip;
+	init();
 	devCode = devcode;
 	ID = id;
 	DEBUG_PRINT(devCode);
@@ -99,6 +97,12 @@ void sgnDev::init(char *id,char *devcode,IPAddress local_ip){
 	delay(1000);
 
 	DEBUG_PRINT("connecting....");
+}
+void sgnDev::init(){
+	if(Ethernet.begin(mac) == 0){
+		DEBUG_PRINT("fail using dhcp");
+		Ethernet.begin(mac,addr);
+	}
 }
 
 void sgnDev::setRest(unsigned long rest){
@@ -122,10 +126,9 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 		}
 	}
 
-
 	if (client.connect(SERVER, 80)) {
 		DEBUG_PRINT("connected");
-		client.flush();
+		//client.flush();
 		client.print("GET /iot/iot_up.php?");
 		client.print("uid=");client.print(ID);
 		client.print("&dc=");client.print(devCode);
@@ -156,13 +159,21 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 		client.print("User-Agent: sgnhiArduinoEthernet\r\n");
 		client.print("Connection: close\r\n");
 		client.println();
+		//Serial.println();
+		state = client.status() == 0?0:1;q
+		//state = client.status() == 0?0:1;
+		//while(client.connected());
 		client.stop();
-		state = 1;
 		sTime = now;
 
 	}
 	else {
+		Serial.println(client.status());
+		client.stop();
   		DEBUG_PRINT("connection failed");
+  		DEBUG_PRINT("try to begin");
+  		init();
+  		state = 0;
   		return ERROR;
   	}
   	return OK;
