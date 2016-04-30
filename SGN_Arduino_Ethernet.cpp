@@ -143,12 +143,12 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 			client.print("&sv");client.print(cnt);client.print("=");
 			client.print(MACHTYPE(vo,m.argType));
 			//
-			#ifdef DEBUG
+			/*#ifdef DEBUG
 			Serial.print("&sc");Serial.print(cnt);Serial.print("=");
 			Serial.print(m.senCode);
 			Serial.print("&sv");Serial.print(cnt);Serial.print("=");
 			Serial.println(MACHTYPE(vo,m.argType));
-			#endif
+			#endif*/
 			//
 			cnt++;
 		}
@@ -160,7 +160,7 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 		client.print("Connection: close\r\n");
 		client.println();
 		//Serial.println();
-		state = client.status() == 0?0:1;q
+		state = client.status() == 0?0:1;
 		//state = client.status() == 0?0:1;
 		//while(client.connected());
 		client.stop();
