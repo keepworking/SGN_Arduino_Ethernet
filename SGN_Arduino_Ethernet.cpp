@@ -101,6 +101,10 @@ void sgnDev::init(char *id,char *devcode,IPAddress local_ip){
 	DEBUG_PRINT("connecting....");
 }
 
+void sgnDev::setRest(unsigned long rest){
+	restTime = rest < REST? REST:rest;
+}
+
 int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 	
 	//return 1;
@@ -110,10 +114,10 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 	if(state != 0){
 		if(now <= sTime){
 			unsigned long lastTime = 0xffffffff - sTime;
-			if((lastTime + now < REST)){
+			if((lastTime + now < restTime)){
 				return WAIT;
 			}
-		}else if(now - sTime < REST){
+		}else if(now - sTime < restTime){
 			return WAIT;
 		}
 	}

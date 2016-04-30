@@ -70,13 +70,14 @@ public:
 	char* devCode;
 	void init(char *id,char *devCode,IPAddress local_ip);
 	int send(dotori mdotori,...);
+	void setRest(unsigned long rest);
 private:
 
 	//일괄 업로드 기능 필요.
 	byte mac[6] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 	unsigned long sTime;
 	int state = 0;
-
+	int restTime = REST;
 };
 
 extern sgnDev dev;
