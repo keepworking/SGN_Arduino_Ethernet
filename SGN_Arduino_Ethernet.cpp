@@ -109,6 +109,18 @@ void sgnDev::setRest(unsigned long rest){
 	restTime = rest < REST? REST:rest;
 }
 
+
+void sgnDev::setmac(byte a,byte b,byte c,byte d,byte e,byte f){
+	mac[0] = a;
+	mac[1] = b;
+	mac[2] = c;
+	mac[3] = d;
+	mac[4] = e;
+	mac[5] = f;
+}
+
+
+
 int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함 -> 수정완료.
 	
 	//return 1;

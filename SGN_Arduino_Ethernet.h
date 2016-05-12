@@ -71,18 +71,22 @@ public:
 	void init(char *id,char *devCode,IPAddress local_ip);
 	int send(dotori mdotori,...);
 	void setRest(unsigned long rest);
+	void setmac(byte a,byte b,byte c,byte d,byte e,byte f);
 private:
 
 	//일괄 업로드 기능 필요.
+
 	byte mac[6] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 	unsigned long sTime;
 	int state = 0;
-	int restTime = REST;
+	unsigned long restTime = REST;
 	IPAddress addr;
 	void init();
 	
 
 };
+
+
 
 extern sgnDev dev;
 
