@@ -109,7 +109,7 @@ void sgnDev::setRest(unsigned long rest){
 	restTime = rest < REST? REST:rest;
 }
 
-int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
+int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함 -> 수정완료.
 	
 	//return 1;
 	//send value code 아래쪽 부터.
@@ -156,7 +156,7 @@ int sgnDev::send(dotori mdotori, ...){//iot_up 소스코드 수정해야함
 
 		client.print(" HTTP/1.0\r\n");
 		client.print("Host:veyrobotics.cafe24.com \r\n");
-		client.print("User-Agent: sgnhiArduinoEthernet\r\n");
+		client.print("User-Agent: sgnhi\r\n");
 		client.print("Connection: close\r\n");
 		client.println();
 		//Serial.println();
