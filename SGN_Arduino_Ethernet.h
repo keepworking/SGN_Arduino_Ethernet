@@ -22,9 +22,9 @@
 
 #define MACHTYPE(v,t) (t == atInt?*(int*)v:(t == atFloat?*(float*)v:(t == atDouble?*(double*)v:(t == atLong?*(long*)v:0))))
 
-#define REST 1800000
+#define REST 600000
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
  #define DEBUG_PRINT(x) Serial.println(x)
@@ -32,15 +32,7 @@
  #define DEBUG_PRINT(x)
 #endif
 
-//Serial 인터페이스 - 추후 스마트폰을 이용한 초기설정 이 목적
 
-
-
-
-
-
-
-// 아직 감도 안잡힘..
 
 class dotori {
 public:
