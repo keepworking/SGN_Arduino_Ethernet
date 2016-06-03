@@ -36,10 +36,6 @@
 
 class dotori {
 public:
-	int argType;
-	int chk = 42;
-	char* senCode;
-	uint32_t value;
 	dotori(char *sencode);
 	void printcode();
 	void set(int val);
@@ -50,6 +46,11 @@ public:
 	//
 	//vvoid setvalue(void *val);
 private:
+	int argType;
+	int chk = 42;
+	char* senCode;
+	uint32_t value;
+	
 };
 
 
@@ -58,8 +59,6 @@ private:
 //장치 메인 객체 사용자가 추가할 필요 x
 class sgnDev {
 public:
-	char* ID;
-	char* devCode;
 	void init(char *id,char *devCode,IPAddress local_ip);
 	int send(dotori mdotori,...);
 	void setRest(unsigned long rest);
@@ -67,7 +66,8 @@ public:
 private:
 
 	//일괄 업로드 기능 필요.
-
+	char* ID;
+	char* devCode;
 	byte mac[6] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 	unsigned long sTime;
 	int state = 0;
