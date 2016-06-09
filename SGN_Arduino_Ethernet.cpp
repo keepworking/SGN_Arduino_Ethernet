@@ -34,58 +34,6 @@ void dotori::set(double val){
 }
 
 
-//데이터 타입과 함께 void 포인터 사용. 서버에 데이터 전송.
-/*int dotori::request(void *val,int type){
-	//delay(1000); 딜레이 필요없음 자꾸 밀려남.
-	unsigned long now = millis();
-
-	DEBUG_PRINT("last time.");
-	DEBUG_PRINT(sTime);
-	DEBUG_PRINT("now time.");
-	DEBUG_PRINT(now);
-	DEBUG_PRINT("value");
-	DEBUG_PRINT(MACHTYPE(val,type));
-
-	if(state != 0){
-		if(now <= sTime){
-			unsigned long lastTime = 0xffffffff - sTime;
-			if((lastTime + now < REST)){
-				return WAIT;
-			}
-		}else if(now - sTime < REST){
-			return WAIT;
-		}
-	}
-
-
-	if (client.connect(SERVER, 80)) {
-		DEBUG_PRINT("connected");
-		client.flush();
-		client.print("GET /iot/iot_up.php?");
-		client.print("uid=");client.print("admin");
-		client.print("&dc=");client.print(dev.devCode);
-		client.print("&sc=");client.print(senCode);
-		client.print("&sv=");client.print(MACHTYPE(val,type));
-		client.print(" HTTP/1.0\r\n");
-		client.print("Host:veyrobotics.cafe24.com \r\n");
-		client.print("User-Agent: sgnhiArduinoEthernet\r\n");
-		client.print("Connection: close\r\n");
-		client.println();
-		client.stop();
-		state = 1;
-		sTime = now;
-
-	}
-	else {
-  		DEBUG_PRINT("connection failed");
-  		return ERROR;
-  	}
-  	return OK;
-}/*
-
-/*vvoid dotori::setvalue(void *val){
-	Serial.println(*(float*) val);
-}*/
 
 void sgnDev::init(char *id,char *devcode,IPAddress local_ip){
 	addr = local_ip;
