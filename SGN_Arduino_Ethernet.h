@@ -22,7 +22,7 @@
 
 #define MACHTYPE(v,t) (t == atInt?*(int*)v:(t == atFloat?*(float*)v:(t == atDouble?*(double*)v:(t == atLong?*(long*)v:0))))
 
-#define REST 600000
+#define REST 1000 * 60 * 10
 
 //#define DEBUG
 
