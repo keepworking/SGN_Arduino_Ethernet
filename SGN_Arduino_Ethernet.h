@@ -50,7 +50,7 @@ private:
 	int chk = 42;
 	char* senCode;
 	uint32_t value;
-friend sngDev;
+friend class sngDev;
 	
 };
 
